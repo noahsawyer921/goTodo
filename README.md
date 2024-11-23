@@ -41,8 +41,10 @@ Interacting with a list requires having a list selected for commands to run on. 
 You may perform any of the following operations on your selected list whenever you have one selected:
 
 1. `ls`: Prints all items in that list
-2. `push`: Prompts you to create a new item by letting you fill out all of the necessary fields. This item is then appended to the end of the list
+2. `push`: Adds a new item to the end of the list.
 3. `pop`: Removes the latest item from the list and prints it.
+4. `enqueue`: Adds a new item to the start of the list.
+5. `dequeue`: Removes an item from the end of the list and prints it.
 
 # Todo items
 
