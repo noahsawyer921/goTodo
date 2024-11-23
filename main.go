@@ -23,6 +23,13 @@ type TodoEntry struct {
 func main() {
 	fmt.Println("Starting todo CLI ...")
 
+	err := os.MkdirAll(getListsDirectory(), os.ModePerm)
+	if err != nil {
+		if !errors.Is(os.ErrExist, err) {
+			panic(err)
+		}
+	}
+
 	args := os.Args[1:]
 
 	if len(args) > 0 {
@@ -56,6 +63,10 @@ func handleCommand(command string) {
 		handlePush()
 	case strings.EqualFold(command, "pop"):
 		handlePop()
+	case strings.EqualFold(command, "enqueue"):
+		handleEnqueue()
+	case strings.EqualFold(command, "dequeue"):
+		handleDequeue()
 	default:
 		fmt.Println("No such command")
 	}
@@ -150,6 +161,34 @@ func handlePop() {
 	list = list[:len(list)-1]
 	writeList(currentList, list)
 }
+func handleEnqueue() {
+	requireSelectList()
+	listName := currentList
+	list, err := readList(listName)
+	if err != nil {
+		panic(list)
+	}
+	list = append([][]string{buildRecord()}, list[1:]...)
+	list = append([][]string{getFields()}, list...)
+	fmt.Println(list)
+	writeList(currentList, list)
+}
+func handleDequeue() {
+	requireSelectList()
+	listName := currentList
+	list, err := readList(listName)
+	if err != nil {
+		panic(list)
+	}
+	if len(list) <= 1 {
+		println("List is empty. Cannot dequeue.")
+		return
+	}
+	item := list[len(list)-1]
+	fmt.Println(recordToString(item))
+	list = list[:len(list)-1]
+	writeList(currentList, list)
+}
 
 func buildRecord() []string {
 	name := getTextInput("Name: ")
@@ -166,12 +205,12 @@ func getListsDirectory() string {
 	}
 
 	executableDirectory := filepath.Dir(exectuable)
-	listsDirectory := executableDirectory + string(os.PathListSeparator) + "todoLists"
+	listsDirectory := executableDirectory + string(os.PathSeparator) + "todoLists"
 	return listsDirectory
 }
 
 func getListPath(listName string) string {
-	return getListsDirectory() + string(os.PathListSeparator) + listName + ".csv"
+	return getListsDirectory() + string(os.PathSeparator) + listName + ".csv"
 }
 
 func getFields() []string {
