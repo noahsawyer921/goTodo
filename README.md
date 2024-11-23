@@ -1,6 +1,21 @@
 # Todo CLI
 
-A basic todo list app that keeps track of tasks. Tasks are tracked on files and will remain between restarts.
+A basic todo list app that keeps track of tasks. Tasks are tracked on files and will remain between restarts. This system should be portable between all operating systems, but it is only tested and maintained for MacOS.
+
+## List Info
+
+Lists are stored in `[install_directory]/todoLists/`. They are stored in the .csv format and are not encrypted. 
+
+Lists are stored with 0664 permissions, such that the owner and group of the owner can read and write, while all other users can read each list. If you wish to change this behavior, you will need to alter the file permission constant in `writeList`. Here are some suggested alternatives:
+
+| Permission | Owner | Group | Other | Description |
+| ---------- | ----- | ----- | ----- | ----------- |
+| 0666       | RW    | RW    | RW    | Fully public lists, readable and writeable by anyone. |
+| 0664       | RW    | RW    | R     | <ins>Default.</ins> Public lists, only writeable by the owner and their group. |
+| 0644       | RW    | R     | R     | Public lists, only writeable by the owner. |
+| 0644       | RW    | RW    |       | Readble and writeable by the owner and their group. |
+| 0640       | RW    | R     |       | Readable by the owner and their group, only writeable by owner. |
+| 0600       | RW    |       |       | Private lists, only readable and writeable by the owner. |
 
 ## Compilation
 
