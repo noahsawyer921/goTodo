@@ -166,12 +166,12 @@ func getListsDirectory() string {
 	}
 
 	executableDirectory := filepath.Dir(exectuable)
-	listsDirectory := executableDirectory + "/todoLists"
+	listsDirectory := executableDirectory + string(os.PathListSeparator) + "todoLists"
 	return listsDirectory
 }
 
 func getListPath(listName string) string {
-	return getListsDirectory() + "/" + listName + ".csv"
+	return getListsDirectory() + string(os.PathListSeparator) + listName + ".csv"
 }
 
 func getFields() []string {
