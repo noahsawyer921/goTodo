@@ -54,6 +54,7 @@ The following items are expected features that are still in progress:
 2. Editing items
 3. Viewing individual items
 4. Use structs for data rather than raw string slices
+5. Standardize use of error responses and error handling.
 
 ## Desired
 
