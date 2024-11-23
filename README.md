@@ -50,7 +50,7 @@ You may perform any of the following operations on your selected list whenever y
 
 The following items are expected features that are still in progress:
 
-1. Queue functionality: support for `enqueue` and `dequeue` commands.
+1. ~~Queue functionality: support for `enqueue` and `dequeue` commands.~~
 2. Editing items
 3. Viewing individual items
 4. Use structs for data rather than raw string slices
