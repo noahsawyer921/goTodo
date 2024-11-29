@@ -1,6 +1,21 @@
 # Todo CLI
 
-A basic todo list app that keeps track of tasks. Tasks are tracked on files and will remain between restarts.
+A basic todo list app that keeps track of tasks. Tasks are tracked on files and will remain between restarts. This system should be portable between all operating systems, but it is only tested and maintained for MacOS.
+
+## List Info
+
+Lists are stored in `[install_directory]/todoLists/`. They are stored in the .csv format and are not encrypted. 
+
+Lists are stored with 0664 permissions, such that the owner and group of the owner can read and write, while all other users can read each list. If you wish to change this behavior, you will need to alter the file permission constant in `writeList`. Here are some suggested alternatives:
+
+| Permission | Owner | Group | Other | Description |
+| ---------- | ----- | ----- | ----- | ----------- |
+| 0666       | RW    | RW    | RW    | Fully public lists, readable and writeable by anyone. |
+| 0664       | RW    | RW    | R     | <ins>Default.</ins> Public lists, only writeable by the owner and their group. |
+| 0644       | RW    | R     | R     | Public lists, only writeable by the owner. |
+| 0644       | RW    | RW    |       | Readble and writeable by the owner and their group. |
+| 0640       | RW    | R     |       | Readable by the owner and their group, only writeable by owner. |
+| 0600       | RW    |       |       | Private lists, only readable and writeable by the owner. |
 
 ## Compilation
 
@@ -41,8 +56,10 @@ Interacting with a list requires having a list selected for commands to run on. 
 You may perform any of the following operations on your selected list whenever you have one selected:
 
 1. `ls`: Prints all items in that list
-2. `push`: Prompts you to create a new item by letting you fill out all of the necessary fields. This item is then appended to the end of the list
+2. `push`: Adds a new item to the end of the list.
 3. `pop`: Removes the latest item from the list and prints it.
+4. `enqueue`: Adds a new item to the start of the list.
+5. `dequeue`: Removes an item from the end of the list and prints it.
 
 # Todo items
 
