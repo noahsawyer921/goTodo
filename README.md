@@ -55,11 +55,13 @@ Interacting with a list requires having a list selected for commands to run on. 
 
 You may perform any of the following operations on your selected list whenever you have one selected:
 
-1. `ls`: Prints all items in that list
-2. `push`: Adds a new item to the end of the list.
-3. `pop`: Removes the latest item from the list and prints it.
-4. `enqueue`: Adds a new item to the start of the list.
-5. `dequeue`: Removes an item from the end of the list and prints it.
+1. `ls`: Prints all records in that list
+2. `push`: Adds a new record to the end of the list.
+3. `pop`: Removes the latest record from the list and prints it.
+4. `enqueue`: Adds a new record to the start of the list.
+5. `dequeue`: Removes an record from the end of the list and prints it.
+6. `get`: View a single record by index.
+7. `remove`: View and remove a single record by index.
 
 # Todo items
 
@@ -68,8 +70,8 @@ You may perform any of the following operations on your selected list whenever y
 The following items are expected features that are still in progress:
 
 1. ~~Queue functionality: support for `enqueue` and `dequeue` commands.~~
-2. Editing items
-3. Viewing individual items
+2. Editing records
+3. ~~Viewing individual records~~
 4. Use structs for data rather than raw string slices
 5. Standardize use of error responses and error handling.
 
