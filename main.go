@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -67,6 +68,10 @@ func handleCommand(command string) {
 		handleEnqueue()
 	case strings.EqualFold(command, "dequeue"):
 		handleDequeue()
+	case strings.EqualFold(command, "get"):
+		handleGet()
+	case strings.EqualFold(command, "remove"):
+		handleRemove()
 	default:
 		fmt.Println("No such command")
 	}
@@ -190,12 +195,59 @@ func handleDequeue() {
 	writeList(currentList, list)
 }
 
+func handleGet() {
+	requireSelectList()
+	listName := currentList
+	list, err := readList(listName)
+	if err != nil {
+		panic(list)
+	}
+	if len(list) <= 1 {
+		println("List is empty. Cannot get.")
+		return
+	}
+	index := getIndex(list)
+	fmt.Println(recordToString(list[index]))
+}
+
+func handleRemove() {
+	requireSelectList()
+	listName := currentList
+	list, err := readList(listName)
+	if err != nil {
+		panic(list)
+	}
+	if len(list) <= 1 {
+		println("List is empty. Cannot remove.")
+		return
+	}
+	index := getIndex(list)
+	fmt.Println(recordToString(list[index]))
+	list = append(list[:index], list[index+1:]...)
+	writeList(currentList, list)
+}
+
 func buildRecord() []string {
 	name := getTextInput("Name: ")
 	desc := getTextInput("Description: ")
 	prio := getTextInput("Priority: ")
 	date := getTextInput("Date: ")
 	return []string{name, desc, prio, date}
+}
+
+func getIndex(list [][]string) int {
+	index := -1
+	var err error
+	for index < 0 || index >= len(list)-1 {
+		indexText := getTextInput("Index to retrieve:")
+		index, err = strconv.Atoi(indexText)
+		if err != nil || index < 0 || index >= len(list)-1 {
+			fmt.Println("Invalid index.")
+			index = -1
+		}
+	}
+	// Adjust for the starting header row
+	return index + 1
 }
 
 func getListsDirectory() string {
